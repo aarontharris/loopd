@@ -19,14 +19,16 @@ Move mongodb into tools/mongo<br>
 ``$> cp -R ~/Downloads/mongodb-osx-x86_64-2.4.6 ./``
 
 Set Mongo Environment (you can copy and paste -- it should run?)<br>
-``echo "" >> ~/.bash_profile``<br>
-``echo "# MONGO ENV" >> ~/.bash_profile``<br>
-``echo "export MONGO_PORT=26017" >> ~/.bash_profile``<br>
-``echo "export MONGO_HOME='~/dev/tools/mongo/mongodb-osx-x86_64-2.4.6'" >> ~/.bash_profile``<br>
-``echo "export MONGO_DATA='~/dev/tools/mongo/data'" >> ~/.bash_profile``<br>
-``echo "export PATH=$PATH:$MONGO_HOME/bin" >> ~/.bash_profile``<br>
-``echo "" >> ~/.bash_profile``<br>
-``source ~/.bash_profile``
+```
+echo "" >> ~/.bash_profile
+echo "# MONGO ENV" >> ~/.bash_profile
+echo "export MONGO_PORT=26017" >> ~/.bash_profile
+echo "export MONGO_HOME='~/dev/tools/mongo/mongodb-osx-x86_64-2.4.6'" >> ~/.bash_profile
+echo "export MONGO_DATA='~/dev/tools/mongo/data'" >> ~/.bash_profile
+echo "export PATH=$PATH:$MONGO_HOME/bin" >> ~/.bash_profile
+echo "" >> ~/.bash_profile
+source ~/.bash_profile
+```
 
 Run MongoDB with: (lets call this alias 'mongorun')<br>
 ``mongod --port 26017 --dbpath $MONGO_DATA/loopd --auth --setParameter supportCompatibilityFormPrivilegeDocuments=0``
