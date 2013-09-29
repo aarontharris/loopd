@@ -8,14 +8,21 @@ Wiki @ https://github.com/aarontharris/loopd/wiki
 Tools you will need:
 ====================
 
+Note: if you download to ~/Downloads, the scripts below will work
+
 Maven v3 (or newer) @ http://maven.apache.org/download.cgi<br>
 Git v1.7.9.6 (or newer) @ http://git-scm.com/downloads<br>
 MongoDB v2.4.6 @ http://www.mongodb.org/downloads<br>
+Memcached v1.4.15 @ http://memcached.org/
+
 
 Installation of loopd server:
 =============================
 
-Set Mongo Environment (you can copy and paste -- it should run?)<br>
+Setup MongoDB:
+=============================
+
+Set Mongo Environment<br>
 ```
 echo "" >> ~/.bash_profile
 echo "# MONGO DEVELOPER ENVIRONMENT" >> ~/.bash_profile
