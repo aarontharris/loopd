@@ -51,6 +51,30 @@ echo "  --setParameter supportCompatibilityFormPrivilegeDocuments=0" >> $MONGO_H
 chmod 755 $MONGO_HOME/bin/mongorun
 ```
 
+Run Mongo without auth, setup admin and stop mongo (make sure mongo isn't already running)
+```
+mongod --port 26017 --dbpath $MONGO_DATA/loopd & # run mongo in the background
+mongo_pid=$! # cache the pid mongo started with
+sleep 2 # give the db a chance to wake up
+mongo --port 26017 \
+  --eval "\
+    db = db.getSiblingDB('admin');\
+    db.addUser( { user: 'admin', pwd: 'adminadmin', roles: [ 'userAdminAnyDatabase' ] } );\
+    "
+mongo --port 26017 \
+  --eval "\
+    db = db.getSiblingDB('admin');\
+    db.addUser( { user: 'loopuser', pwd: 'loopuserloopuser', roles: [ 'readWrite' ] } );\
+    "
+sleep 2 # give the db a chance to write
+kill $mongo_pid # soft kill the server
+mongo_pid= # clear mongo pid
+```
+
+Rerun Mongo with auth
+```
+mongorun
+```
 
 
 Pull down the server code<br>
