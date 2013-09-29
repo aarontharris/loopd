@@ -76,7 +76,7 @@ Rerun Mongo with auth
 mongorun
 ```
 
-Test the loopuser connection with auth
+Test the dbuser connection with auth
 ```
 mongo --port $MONGO_PORT -u $MONGO_DBUSER -p $MONGO_DBPASS $MONGO_DBNAME
   db.deleteme.save({key: 'blah', value: 'asdf'});
