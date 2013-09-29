@@ -11,12 +11,16 @@ Installation of loopd server:
 Download MongoDB for your OS @ http://www.mongodb.org/downloads<br>
 
 Create a home for MongoDB<br>
-``$> mkdir ~/dev/tools/mongo``<br>
-``$> mkdir ~/dev/tools/mongo/data``
+```
+$> mkdir ~/dev/tools/mongo
+$> mkdir ~/dev/tools/mongo/data
+```
 
 Move mongodb into tools/mongo<br>
-``$> cd ~/dev/tools/mongo``<br>
-``$> cp -R ~/Downloads/mongodb-osx-x86_64-2.4.6 ./``
+```
+$> cd ~/dev/tools/mongo
+$> cp -R ~/Downloads/mongodb-osx-x86_64-2.4.6 ./
+```
 
 Set Mongo Environment (you can copy and paste -- it should run?)<br>
 ```
