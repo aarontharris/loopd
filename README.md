@@ -12,14 +12,14 @@ Download MongoDB for your OS @ http://www.mongodb.org/downloads<br>
 
 Create a home for MongoDB<br>
 ```
-$> mkdir ~/dev/tools/mongo
-$> mkdir ~/dev/tools/mongo/data
+mkdir ~/dev/tools/mongo
+mkdir ~/dev/tools/mongo/data
 ```
 
 Move mongodb into tools/mongo<br>
 ```
-$> cd ~/dev/tools/mongo
-$> cp -R ~/Downloads/mongodb-osx-x86_64-2.4.6 ./
+cd ~/dev/tools/mongo
+cp -R ~/Downloads/mongodb-osx-x86_64-2.4.6 ./
 ```
 
 Set Mongo Environment (you can copy and paste -- it should run?)<br>
@@ -35,15 +35,20 @@ source ~/.bash_profile
 ```
 
 Run MongoDB with: (lets call this alias 'mongorun')<br>
-``mongod --port 26017 --dbpath $MONGO_DATA/loopd --auth --setParameter supportCompatibilityFormPrivilegeDocuments=0``
+```
+mongod --port 26017 --dbpath $MONGO_DATA/loopd --auth --setParameter supportCompatibilityFormPrivilegeDocuments=0
+```
 
 
 
 Pull down the server code<br>
-``$> git clone git@github.com:aarontharris/loopd.git``
-<br>
-<br>
+```
+git clone git@github.com:aarontharris/loopd.git
+```
+
 Pull down libraries and build using maven<br>
-``$> mvn clean install``
+```
+mvn clean install
+```
 
 
