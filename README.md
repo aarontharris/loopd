@@ -63,7 +63,7 @@ mongo --port 26017 \
     "
 mongo --port 26017 \
   --eval "\
-    db = db.getSiblingDB('admin');\
+    db = db.getSiblingDB('loop');\
     db.addUser( { user: 'loopuser', pwd: 'loopuserloopuser', roles: [ 'readWrite' ] } );\
     "
 sleep 2 # give the db a chance to write
