@@ -13,6 +13,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
 
 public class Test {
 	private static Injector injector;
@@ -65,24 +66,27 @@ public class Test {
 			// if it's a member of a replica set:
 			MongoClient mongoClient = new MongoClient( "127.0.0.1", 26017 );
 
-			DB db = mongoClient.getDB( "loopd" );
+			DB db = mongoClient.getDB( "loop" );
 
 			// db.addUser( { user: "loopuser", pwd: "macmacmac", roles: [ "readWrite" ] } )
-			boolean auth = db.authenticate( "loopuser", "macmacmac".toCharArray() );
+			boolean auth = db.authenticate( "loopuser", "looppass".toCharArray() );
 
 			Set<String> colls = db.getCollectionNames();
 			for ( String s : colls ) {
-				System.out.println( s );
+				System.out.println( "Collection: " + s );
 			}
 
 			for ( String collectionName : db.getCollectionNames() ) {
-				DBCollection collection = db.getCollection( collectionName );
-				DBCursor cursor = collection.find();
-				while ( cursor.hasNext() ) {
-					DBObject obj = cursor.next();
-					for ( String key : obj.keySet() ) {
-						System.out.println( String.format( "%s.%s='%s'", collectionName, key, obj.get( key ) ) );
+				try {
+					DBCollection collection = db.getCollection( collectionName );
+					DBCursor cursor = collection.find();
+					while ( cursor.hasNext() ) {
+						DBObject obj = cursor.next();
+						for ( String key : obj.keySet() ) {
+							System.out.println( String.format( "%s.%s='%s'", collectionName, key, obj.get( key ) ) );
+						}
 					}
+				} catch ( MongoException me ) {
 				}
 			}
 		} catch ( Exception e ) {
