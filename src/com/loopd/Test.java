@@ -68,7 +68,7 @@ public class Test {
 
 			DB db = mongoClient.getDB( "loop" );
 
-			// db.addUser( { user: "loopuser", pwd: "macmacmac", roles: [ "readWrite" ] } )
+			// db.addUser( { user: "loopuser", pwd: "looppass", roles: [ "readWrite" ] } )
 			boolean auth = db.authenticate( "loopuser", "looppass".toCharArray() );
 
 			Set<String> colls = db.getCollectionNames();
