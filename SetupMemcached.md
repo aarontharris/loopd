@@ -27,7 +27,7 @@ cp -R ~/Downloads/memcached-$memc_ver $MEMC_HOME/memcached-$memc_ver
 ```
 
 You'll need to build Memcached<br>
-If ./configure fails see [Setup Libevent](https://github.com/aarontharris/loopd/wiki/Setup-Libevent-for-Memcached)
+If ./configure fails see [Setup Libevent](https://github.com/aarontharris/loopd/blob/master/SetupLibEvent.md)
 ```
 cd $MEMC_HOME/memcached-$memc_ver
 ./configure
