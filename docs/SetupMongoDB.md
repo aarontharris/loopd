@@ -69,7 +69,7 @@ mongo --port $MONGO_PORT -u $MONGO_DBUSER -p $MONGO_DBPASS $MONGO_DBNAME
   db.deleteme.save({key: 'blah', value: 'asdf'});
   db.deleteme.find( {key:'blah'});
   db.deleteme.drop();
-  show dbs # should return errmsg: "unauthorized"
+  show dbs # should return unauthorized
   exit
 ```
 
