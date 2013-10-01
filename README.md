@@ -1,7 +1,7 @@
 loopd Server v0.1 BETA
 ======================
 
-[Setup MongoDB](https://github.com/aarontharris/loopd/wiki/Setup-MongoDB)<br>
+[Setup MongoDB](https://github.com/aarontharris/loopd/blob/master/SetupMongoDB.md)<br>
 [Setup Memcached](https://github.com/aarontharris/loopd/wiki/Setup-Memcached)<br>
 
 
