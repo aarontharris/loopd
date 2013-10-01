@@ -30,10 +30,10 @@ cp -R ~/Downloads/mongodb-osx-x86_64-2.4.6 $MONGO_HOME
 Our Mongo run script 'mongorun'<br>
 ```
 echo '#!/bin/bash' > $MONGO_HOME/bin/mongorun
-echo "mongod \\\\" >> $MONGO_HOME/bin/mongorun
-echo "  --port \$MONGO_PORT \\\\" >> $MONGO_HOME/bin/mongorun
-echo "  --dbpath \$MONGO_DATA/\$MONGO_DBNAME \\\\" >> $MONGO_HOME/bin/mongorun
-echo "  --auth \\\\" >> $MONGO_HOME/bin/mongorun
+echo "mongod \\" >> $MONGO_HOME/bin/mongorun
+echo "  --port \$MONGO_PORT \\" >> $MONGO_HOME/bin/mongorun
+echo "  --dbpath \$MONGO_DATA/\$MONGO_DBNAME \\" >> $MONGO_HOME/bin/mongorun
+echo "  --auth \\" >> $MONGO_HOME/bin/mongorun
 echo "  --setParameter supportCompatibilityFormPrivilegeDocuments=0" >> $MONGO_HOME/bin/mongorun
 chmod 755 $MONGO_HOME/bin/mongorun
 ```
