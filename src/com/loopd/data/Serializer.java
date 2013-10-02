@@ -1,5 +1,6 @@
 package com.loopd.data;
 
+import java.net.InetSocketAddress;
 import java.util.Set;
 
 import net.spy.memcached.MemcachedClient;
@@ -13,6 +14,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.util.JSON;
 
@@ -25,13 +27,33 @@ public class Serializer {
 	private static final int SECONDS_14DAY = SECONDS_DAY * 14;
 
 	@Inject
-	private DB db;
-	@Inject
-	private MemcachedClient memc;
-	@Inject
 	private Gson gson;
 	@Inject
 	private Logger log;
+
+	private DB db;
+	private MemcachedClient memc;
+
+	@Inject
+	private void init() {
+		try {
+			{ // MongoDB
+				MongoClient mongoClient = new MongoClient( "127.0.0.1", 26017 );
+				db = mongoClient.getDB( "loop" );
+				if ( !db.authenticate( "loopuser", "looppass".toCharArray() ) ) {
+					throw new IllegalStateException( "Not authorized to access the DB" );
+				}
+			}
+
+			{ // Memcached
+				memc = new MemcachedClient( new InetSocketAddress( "127.0.0.1", 11211 ) );
+			}
+		} catch ( Exception e ) {
+			e.printStackTrace();
+			throw new IllegalStateException( "Guice Initialization Failed" );
+		}
+	}
+
 
 	private String toKey( Class<?> clazz, String value ) {
 		return clazz.getCanonicalName() + "_" + value;
@@ -58,6 +80,10 @@ public class Serializer {
 
 	private void putToCache( String key, String jsonStr ) {
 		memc.set( key, SECONDS_14DAY, jsonStr );
+	}
+
+	public String toJsonString( Object o ) {
+		return gson.toJson( o );
 	}
 
 	public void saveOrUpdate( Object o ) throws Exception {
