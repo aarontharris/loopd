@@ -3,7 +3,7 @@ package com.loopd;
 import com.google.inject.Inject;
 
 
-public class GuiceResource {
+public class BaseResource {
 
 	@Inject
 	private Logger log;
@@ -12,8 +12,9 @@ public class GuiceResource {
 		return log;
 	}
 
-	public GuiceResource() {
+	public BaseResource() {
 		Application.injectMembers( this );
+		log.debug( "%s instantiated", getClass().getSimpleName() );
 	}
 
 }

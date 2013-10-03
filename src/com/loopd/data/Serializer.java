@@ -32,7 +32,7 @@ public class Serializer {
 	private Logger log;
 
 	private DB db;
-	private MemcachedClient memc;
+	private MemcachedClient memc; // maybe have an L1 cache that stores key=>POJO?
 
 	@Inject
 	private void init() {
@@ -55,8 +55,8 @@ public class Serializer {
 	}
 
 
-	private String toKey( Class<?> clazz, String value ) {
-		return clazz.getCanonicalName() + "_" + value;
+	private String toKey( Class<?> clazz, String key, String val ) {
+		return clazz.getCanonicalName() + "_" + key + "=" + val;
 	}
 
 	private String getFromCache( String key ) {
@@ -86,9 +86,13 @@ public class Serializer {
 		return gson.toJson( o );
 	}
 
-	public void saveOrUpdate( Object o ) throws Exception {
+	public <T> T fromJsonString( String jsonString, Class<T> clazz ) {
+		return gson.fromJson( jsonString, clazz );
+	}
+
+	public void save( Object o ) throws Exception {
 		try {
-			String itemStr = gson.toJson( o );
+			String itemStr = toJsonString( o );
 			DBCollection collection = db.getCollection( "testCollection" );
 			collection.insert( (DBObject) JSON.parse( itemStr ) );
 		} catch ( Exception e ) {
@@ -96,21 +100,32 @@ public class Serializer {
 		}
 	}
 
-	public MediaItem getMediaItemByUrl( String url ) throws Exception {
-		String key = toKey( MediaItem.class, url );
-		String value = null;
+	public <T> String getJsonByKeyVal( Class<T> clazz, String key, String val ) throws Exception {
+		String cacheKey = toKey( clazz, key, val );
+		String out = null;
 
-		value = getFromCache( key );
-		if ( value != null ) {
-			return gson.fromJson( value, MediaItem.class );
+		out = getFromCache( cacheKey );
+		if ( out != null ) {
+			return out;
 		}
+		log.debug( "CACHE-MISS: %s", cacheKey );
 
 		DBCollection collection = db.getCollection( "testCollection" );
-		DBCursor cursor = collection.find( new BasicDBObject( "url", url ) );
+		DBCursor cursor = collection.find( new BasicDBObject( key, val ) );
 		if ( cursor.hasNext() ) {
 			String jsonStr = JSON.serialize( cursor.next() );
-			putToCache( key, jsonStr );
-			return gson.fromJson( jsonStr, MediaItem.class );
+			putToCache( cacheKey, jsonStr );
+			return jsonStr;
+		}
+		log.debug( "DATAB-MISS: %s", cacheKey );
+
+		return null;
+	}
+
+	public <T> T getObjectByKeyVal( Class<T> clazz, String key, String val ) throws Exception {
+		String jsonStr = getJsonByKeyVal( clazz, key, val );
+		if ( jsonStr != null ) {
+			return fromJsonString( jsonStr, clazz );
 		}
 		return null;
 	}
