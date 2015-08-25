@@ -40,6 +40,9 @@ public class Serializer {
 			{ // MongoDB
 				MongoClient mongoClient = new MongoClient( "127.0.0.1", 26017 );
 				db = mongoClient.getDB( "loop" );
+				
+				// FIXME: read REAL password from a local untracked config file so I don't have to manually maintain it
+				// same goes for ports and IPs
 				if ( !db.authenticate( "loopuser", "looppass".toCharArray() ) ) {
 					throw new IllegalStateException( "Not authorized to access the DB" );
 				}
