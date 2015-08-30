@@ -4,13 +4,14 @@ MongoDB v2.4.6 @ http://www.mongodb.org/downloads<br>
 
 Set Mongo Environment<br>
 ```
+export tMongoName=mongodb-osx-x86_64-3.0.6
 echo "" >> ~/.bash_profile
 echo "# MONGO DEVELOPER ENVIRONMENT" >> ~/.bash_profile
 echo "export MONGO_PORT=26017" >> ~/.bash_profile
 echo "export MONGO_DBNAME=loop" >> ~/.bash_profile
 echo "export MONGO_DBUSER=loopuser" >> ~/.bash_profile
 echo "export MONGO_DBPASS=looppass" >> ~/.bash_profile
-echo "export MONGO_HOME='$HOME/dev/services/mongo/mongodb-osx-x86_64-2.4.6'" >> ~/.bash_profile
+echo "export MONGO_HOME='$HOME/dev/services/mongo/$tMongoName'" >> ~/.bash_profile
 echo "export MONGO_DATA='$HOME/dev/services/mongo/data'" >> ~/.bash_profile
 echo "export PATH=\$PATH:\$MONGO_HOME/bin" >> ~/.bash_profile
 echo "" >> ~/.bash_profile
@@ -24,7 +25,7 @@ mkdir -p $MONGO_DATA/$MONGO_DBNAME
 
 Move mongodb into tools/mongo<br>
 ```
-cp -R ~/Downloads/mongodb-osx-x86_64-2.4.6 $MONGO_HOME
+cp -R ~/Downloads/$tMongoName $MONGO_HOME
 ```
 
 Our Mongo run script 'mongorun'<br>
